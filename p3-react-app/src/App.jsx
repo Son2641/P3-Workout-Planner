@@ -1,46 +1,17 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from './assets/vite.svg';
-import './App.css';
+import { BrowserRouter, Outlet } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Routes from './router';
 
-function App() {
-  const [count, setCount] = useState(0);
-
+const App = () => {
   return (
-    <div className="App">
-      <div className="uplift">
-        <a
-          href="https://www.upliftcodecamp.com/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img src="./uplift-logo.png" alt="Uplift Logo" />
-        </a>
-      </div>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <div className="card">
-        <button
-          type="button"
-          onClick={() => setCount((currentCount) => currentCount + 1)}
-        >
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <>
+      <BrowserRouter>
+        <Navbar />
+        <Outlet />
+        <Routes />
+      </BrowserRouter>
+    </>
   );
-}
+};
 
 export default App;
