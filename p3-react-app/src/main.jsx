@@ -14,15 +14,21 @@ const theme = createTheme({
       main: '#FFFFFF',
     },
     background: {
-      default: '#EEEEEE',
+      default: '#F4F3F1',
+    },
+    text: {
+      primary: '#36353A', // Set the primary text color
+      secondary: '#6F61FE',
     },
   },
   typography: {
     button: {
       textTransform: 'none',
+      color: '#36353A', // Set the button text color
     },
   },
 });
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
