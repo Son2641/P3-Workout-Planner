@@ -24,9 +24,6 @@ const LoginRegister = () => {
 
   return (
     <Container className={classes.container} maxWidth='xs'>
-      <Typography component='h1' variant='h5'>
-        Sign In / Sign Up
-      </Typography>
       <Tabs
         value={value}
         onChange={handleChange}

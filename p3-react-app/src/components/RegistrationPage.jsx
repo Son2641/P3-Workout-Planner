@@ -12,6 +12,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import IconButton from '@mui/material/IconButton';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -37,6 +40,16 @@ const validationSchema = Yup.object({
 const RegistrationPage = () => {
   const classes = useStyles();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleToggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -57,7 +70,7 @@ const RegistrationPage = () => {
 
   return (
     <Container className={classes.container} maxWidth='xs'>
-      <Typography component='h1' variant='h5'>
+      <Typography component='h1' variant='h5' sx={{ mb: 2 }}>
         Sign Up to App name
       </Typography>
       <form onSubmit={formik.handleSubmit}>
@@ -86,18 +99,24 @@ const RegistrationPage = () => {
               helperText={formik.touched.email && formik.errors.email}
             />
           </Grid>
-
           <Grid item xs={12}>
             <TextField
               fullWidth
               id='password'
               name='password'
               label='Password'
-              type='password'
+              type={showPassword ? 'text' : 'password'}
               value={formik.values.password}
               onChange={formik.handleChange}
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
+              InputProps={{
+                endAdornment: (
+                  <IconButton onClick={handleTogglePasswordVisibility}>
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                ),
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -106,7 +125,7 @@ const RegistrationPage = () => {
               id='confirmPassword'
               name='confirmPassword'
               label='Confirm Password'
-              type='password'
+              type={showConfirmPassword ? 'text' : 'password'}
               value={formik.values.confirmPassword}
               onChange={formik.handleChange}
               error={
@@ -116,6 +135,13 @@ const RegistrationPage = () => {
               helperText={
                 formik.touched.confirmPassword && formik.errors.confirmPassword
               }
+              InputProps={{
+                endAdornment: (
+                  <IconButton onClick={handleToggleConfirmPasswordVisibility}>
+                    {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                ),
+              }}
             />
           </Grid>
           <Grid item xs={12}>

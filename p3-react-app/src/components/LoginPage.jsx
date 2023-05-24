@@ -6,6 +6,10 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import IconButton from '@mui/material/IconButton';
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -25,7 +29,12 @@ const validationSchema = Yup.object({
 });
 
 const LoginPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const classes = useStyles();
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -40,7 +49,7 @@ const LoginPage = () => {
 
   return (
     <Container className={classes.container} maxWidth='xs'>
-      <Typography component='h1' variant='h5'>
+      <Typography component='h1' variant='h5' sx={{ mb: 2 }}>
         Sign In
       </Typography>
       <form onSubmit={formik.handleSubmit}>
@@ -63,11 +72,18 @@ const LoginPage = () => {
               id='password'
               name='password'
               label='Password'
-              type='password'
+              type={showPassword ? 'text' : 'password'}
               value={formik.values.password}
               onChange={formik.handleChange}
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
+              InputProps={{
+                endAdornment: (
+                  <IconButton onClick={handleTogglePasswordVisibility}>
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                ),
+              }}
             />
           </Grid>
           <Grid item xs={12}>
