@@ -97,7 +97,7 @@ const Navbar = () => {
             to='/login'
             sx={{
               color: 'text.secondary',
-              border: '3px solid',
+              border: '2px solid',
               borderColor: 'text.secondary',
               borderRadius: 0,
               typography: 'body1',

@@ -6,6 +6,12 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles';
+import { useState } from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -15,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const validationSchema = Yup.object({
   username: Yup.string().min(3, 'Minimum 3 characters').required('Required'),
+  email: Yup.string().email('Invalid email address').required('Required'),
   password: Yup.string()
     .min(8, 'Minimum 8 characters')
     .matches(
@@ -22,26 +29,36 @@ const validationSchema = Yup.object({
       'Must contain at least one number and one special case character'
     )
     .required('Required'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required('Required'),
 });
 
-const LoginPage = () => {
+const RegistrationPage = () => {
   const classes = useStyles();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const formik = useFormik({
     initialValues: {
       username: '',
+      email: '',
       password: '',
+      confirmPassword: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log('Form data', values);
+      setIsDialogOpen(true);
     },
   });
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
 
   return (
     <Container className={classes.container} maxWidth='xs'>
       <Typography component='h1' variant='h5'>
-        Sign In
+        Sign Up to App name
       </Typography>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2}>
@@ -60,6 +77,19 @@ const LoginPage = () => {
           <Grid item xs={12}>
             <TextField
               fullWidth
+              id='email'
+              name='email'
+              label='Email'
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
               id='password'
               name='password'
               label='Password'
@@ -71,14 +101,43 @@ const LoginPage = () => {
             />
           </Grid>
           <Grid item xs={12}>
+            <TextField
+              fullWidth
+              id='confirmPassword'
+              name='confirmPassword'
+              label='Confirm Password'
+              type='password'
+              value={formik.values.confirmPassword}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.confirmPassword &&
+                Boolean(formik.errors.confirmPassword)
+              }
+              helperText={
+                formik.touched.confirmPassword && formik.errors.confirmPassword
+              }
+            />
+          </Grid>
+          <Grid item xs={12}>
             <Button color='primary' variant='contained' fullWidth type='submit'>
-              Login
+              Register
             </Button>
           </Grid>
         </Grid>
       </form>
+      <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
+        <DialogTitle>Welcome!</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Registration successful!</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color='primary'>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };
 
-export default LoginPage;
+export default RegistrationPage;

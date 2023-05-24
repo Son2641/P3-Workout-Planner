@@ -2,9 +2,11 @@ import { Route, Routes } from 'react-router-dom';
 import AboutPage from './components/AboutPage';
 import Exercises from './components/Exercises';
 import NotFoundPage from './components/NotFoundPage';
-import LoginPage from './components/LoginPage';
 import Workouts from './components/Workouts';
 import HomePage from './components/HomePage';
+import RegistrationPage from './components/RegistrationPage';
+import LoginPage from './components/LoginPage';
+import LoginRegister from './components/LoginRegister';
 
 const Router = () => {
   return (
@@ -13,7 +15,7 @@ const Router = () => {
       <Route path='/about' element={<AboutPage />} />
       <Route path='/exercises' element={<Exercises />} />
       <Route path='/workouts' element={<Workouts />} />
-      <Route path='/login' element={<LoginPage />} />
+      <Route path='/login' element={<LoginRegister />} />
       <Route path='*' element={<NotFoundPage />} />
     </Routes>
   );
