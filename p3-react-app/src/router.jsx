@@ -4,8 +4,6 @@ import Exercises from './components/Exercises';
 import NotFoundPage from './components/NotFoundPage';
 import Workouts from './components/Workouts';
 import HomePage from './components/HomePage';
-import RegistrationPage from './components/RegistrationPage';
-import LoginPage from './components/LoginPage';
 import LoginRegister from './components/LoginRegister';
 
 const Router = () => {

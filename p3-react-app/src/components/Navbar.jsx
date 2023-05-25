@@ -35,9 +35,11 @@ const Navbar = () => {
               color: 'text.primary',
               '&:hover': {
                 color: 'text.secondary',
+                textDecoration: 'underline',
               },
               '&:active': {
                 color: 'text.secondary',
+                textDecoration: 'underline',
               },
             }}
           >
@@ -51,9 +53,11 @@ const Navbar = () => {
               color: 'text.primary',
               '&:hover': {
                 color: 'text.secondary',
+                textDecoration: 'underline',
               },
               '&:active': {
                 color: 'text.secondary',
+                textDecoration: 'underline',
               },
             }}
           >
@@ -67,9 +71,11 @@ const Navbar = () => {
               color: 'text.primary',
               '&:hover': {
                 color: 'text.secondary',
+                textDecoration: 'underline',
               },
               '&:active': {
                 color: 'text.secondary',
+                textDecoration: 'underline',
               },
             }}
           >
@@ -83,9 +89,11 @@ const Navbar = () => {
               color: 'text.primary',
               '&:hover': {
                 color: 'text.secondary',
+                textDecoration: 'underline',
               },
               '&:active': {
                 color: 'text.secondary',
+                textDecoration: 'underline',
               },
               marginRight: 5,
             }}

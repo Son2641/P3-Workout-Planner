@@ -49,7 +49,11 @@ const LoginPage = () => {
 
   return (
     <Container className={classes.container} maxWidth='xs'>
-      <Typography component='h1' variant='h5' sx={{ mb: 2 }}>
+      <Typography
+        component='h1'
+        variant='h5'
+        sx={{ mb: 2, fontWeight: 'bold' }}
+      >
         Sign In
       </Typography>
       <form onSubmit={formik.handleSubmit}>
@@ -62,6 +66,7 @@ const LoginPage = () => {
               label='Username'
               value={formik.values.username}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               error={formik.touched.username && Boolean(formik.errors.username)}
               helperText={formik.touched.username && formik.errors.username}
             />
@@ -75,6 +80,7 @@ const LoginPage = () => {
               type={showPassword ? 'text' : 'password'}
               value={formik.values.password}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
               InputProps={{
@@ -88,7 +94,7 @@ const LoginPage = () => {
           </Grid>
           <Grid item xs={12}>
             <Button color='primary' variant='contained' fullWidth type='submit'>
-              Login
+              Sign In
             </Button>
           </Grid>
         </Grid>

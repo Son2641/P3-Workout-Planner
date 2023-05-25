@@ -7,11 +7,8 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles';
 import { useState } from 'react';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogActions from '@mui/material/DialogActions';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
@@ -39,7 +36,12 @@ const validationSchema = Yup.object({
 
 const RegistrationPage = () => {
   const classes = useStyles();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+
+  const handleCloseSnackbar = () => {
+    setIsSnackbarOpen(false);
+  };
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -60,17 +62,17 @@ const RegistrationPage = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      setIsDialogOpen(true);
+      setIsSnackbarOpen(true);
     },
   });
 
-  const handleCloseDialog = () => {
-    setIsDialogOpen(false);
-  };
-
   return (
     <Container className={classes.container} maxWidth='xs'>
-      <Typography component='h1' variant='h5' sx={{ mb: 2 }}>
+      <Typography
+        component='h1'
+        variant='h5'
+        sx={{ mb: 2, fontWeight: 'bold' }}
+      >
         Sign Up to App name
       </Typography>
       <form onSubmit={formik.handleSubmit}>
@@ -83,8 +85,17 @@ const RegistrationPage = () => {
               label='Username'
               value={formik.values.username}
               onChange={formik.handleChange}
-              error={formik.touched.username && Boolean(formik.errors.username)}
-              helperText={formik.touched.username && formik.errors.username}
+              onBlur={formik.handleBlur}
+              error={
+                (formik.touched.username && Boolean(formik.errors.username)) ||
+                (!formik.values.username && formik.touched.username)
+              }
+              helperText={
+                (formik.touched.username && formik.errors.username) ||
+                (!formik.values.username &&
+                  formik.touched.username &&
+                  'Username is required')
+              }
             />
           </Grid>
           <Grid item xs={12}>
@@ -95,8 +106,17 @@ const RegistrationPage = () => {
               label='Email'
               value={formik.values.email}
               onChange={formik.handleChange}
-              error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.errors.email}
+              onBlur={formik.handleBlur}
+              error={
+                (formik.touched.email && Boolean(formik.errors.email)) ||
+                (!formik.values.email && formik.touched.email)
+              }
+              helperText={
+                (formik.touched.email && formik.errors.email) ||
+                (!formik.values.email &&
+                  formik.touched.email &&
+                  'Email is required')
+              }
             />
           </Grid>
           <Grid item xs={12}>
@@ -108,8 +128,17 @@ const RegistrationPage = () => {
               type={showPassword ? 'text' : 'password'}
               value={formik.values.password}
               onChange={formik.handleChange}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
+              onBlur={formik.handleBlur}
+              error={
+                (formik.touched.password && Boolean(formik.errors.password)) ||
+                (!formik.values.password && formik.touched.password)
+              }
+              helperText={
+                (formik.touched.password && formik.errors.password) ||
+                (!formik.values.password &&
+                  formik.touched.password &&
+                  'Password is required')
+              }
               InputProps={{
                 endAdornment: (
                   <IconButton onClick={handleTogglePasswordVisibility}>
@@ -128,12 +157,19 @@ const RegistrationPage = () => {
               type={showConfirmPassword ? 'text' : 'password'}
               value={formik.values.confirmPassword}
               onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
               error={
-                formik.touched.confirmPassword &&
-                Boolean(formik.errors.confirmPassword)
+                (formik.touched.confirmPassword &&
+                  Boolean(formik.errors.confirmPassword)) ||
+                (!formik.values.confirmPassword &&
+                  formik.touched.confirmPassword)
               }
               helperText={
-                formik.touched.confirmPassword && formik.errors.confirmPassword
+                (formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword) ||
+                (!formik.values.confirmPassword &&
+                  formik.touched.confirmPassword &&
+                  'Confirm Password is required')
               }
               InputProps={{
                 endAdornment: (
@@ -151,17 +187,19 @@ const RegistrationPage = () => {
           </Grid>
         </Grid>
       </form>
-      <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
-        <DialogTitle>Welcome!</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Registration successful!</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} color='primary'>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <Snackbar
+        open={isSnackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <MuiAlert onClose={handleCloseSnackbar} severity='success'>
+          Registration successful!
+        </MuiAlert>
+      </Snackbar>
     </Container>
   );
 };

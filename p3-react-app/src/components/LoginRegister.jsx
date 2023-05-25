@@ -3,7 +3,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Box } from '@mui/material';
 import Container from '@mui/material/Container';
-import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import LoginPage from './LoginPage';
 import RegistrationPage from './RegistrationPage';
