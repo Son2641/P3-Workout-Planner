@@ -14,10 +14,10 @@ const BodyPart = ({ item, setBodyPart, bodyPart }) => {
         borderTop: bodyPart === item ? '4px solid #6F61FE' : '',
         backgroundColor: '#FFF',
         borderBottomLeftRadius: '20px',
-        width: '270px',
-        height: '280px',
+        width: '170px',
+        height: '170px',
         cursor: 'pointer',
-        gap: '47px',
+        gap: '10px',
         transition: 'transform 0.3s',
         '&:hover': {
           transform: 'scale(1.1)', // Add the desired scale value for the hover effect

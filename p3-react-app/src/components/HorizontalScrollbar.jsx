@@ -42,7 +42,7 @@ const HorizontalScrollbar = ({ data, bodyPart, setBodyPart }) => {
         scrollbarWidth: 'thin',
         scrollbarColor: '#6F61FE transparent',
         '&::-webkit-scrollbar': {
-          height: '8px',
+          height: '5px',
         },
         '&::-webkit-scrollbar-thumb': {
           background: '#6F61FE',
@@ -51,11 +51,17 @@ const HorizontalScrollbar = ({ data, bodyPart, setBodyPart }) => {
         '&::-webkit-scrollbar-track': {
           background: 'transparent',
         },
+        height: '180px',
       }}
     >
       {data.map((item) => (
         <ImageListItem key={item.id || item}>
-          <Box itemId={item.id || item} title={item.id || item} m='0 40px'>
+          <Box
+            itemId={item.id || item}
+            title={item.id || item}
+            m='0 40px'
+            // sx={{ height: '200px' }}
+          >
             <BodyPart
               item={item}
               bodyPart={bodyPart}

@@ -25,7 +25,7 @@ const Navbar = () => {
               color: 'text.secondary',
             }}
           >
-            App Name
+            Son Fitness
           </Typography>
           <Button
             color='secondary'

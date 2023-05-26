@@ -73,7 +73,7 @@ const RegistrationPage = () => {
         variant='h5'
         sx={{ mb: 2, fontWeight: 'bold' }}
       >
-        Sign Up to App name
+        Sign Up to Son Fitness
       </Typography>
       <form onSubmit={formik.handleSubmit}>
         <Grid container spacing={2}>
