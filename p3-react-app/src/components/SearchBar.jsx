@@ -5,10 +5,10 @@ import { useState } from 'react';
 import { Search } from '@mui/icons-material';
 import { exerciseOptions, fetchData } from '../utils/fetchData';
 import { useEffect } from 'react';
+import HorizontalScrollbar from './HorizontalScrollbar';
 
-const SearchBar = () => {
+const SearchBar = ({ setExercises, bodyPart, setBodyPart }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [exercises, SetExercises] = useState([]);
   const [bodyParts, setBodyParts] = useState([]);
 
   useEffect(() => {
@@ -19,6 +19,8 @@ const SearchBar = () => {
       );
       setBodyParts(['all', ...bodyPartsData]);
     };
+
+    fetchExercisesData();
   }, []);
 
   const handleChange = (e) => {
@@ -34,54 +36,63 @@ const SearchBar = () => {
       );
       const searchedExercises = exercisesData.filter(
         (exercise) =>
-          exercise.name.toLowerCase().includes(searchTerm) ||
-          exercise.target.toLowerCase().includes(searchTerm) ||
-          exercise.equipment.toLowerCase().includes(searchTerm) ||
-          exercise.bodypart.toLowerCase().includes(searchTerm)
+          exercise.name?.toLowerCase().includes(searchTerm) ||
+          exercise.target?.toLowerCase().includes(searchTerm) ||
+          exercise.equipment?.toLowerCase().includes(searchTerm) ||
+          exercise.bodypart?.toLowerCase().includes(searchTerm)
       );
 
       setSearchTerm('');
-      SetExercises(searchedExercises);
+      setExercises(searchedExercises);
     }
   };
 
   return (
-    <Box
-      component='form'
-      onSubmit={handleSubmit}
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '40%',
-      }}
-    >
-      <TextField
-        label='Search'
-        variant='outlined'
-        value={searchTerm}
-        onChange={handleChange}
+    <>
+      <Box
+        component='form'
+        onSubmit={handleSubmit}
         sx={{
-          flexGrow: 1,
-          mr: 1,
-          '& .MuiInputBase-input': {
-            height: '17px', // Adjusted height to 32px
-          },
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '40%',
         }}
-        InputProps={{
-          endAdornment: (
-            <IconButton
-              type='submit'
-              color='primary'
-              aria-label='search'
-              onClick={handleSubmit}
-            >
-              <Search />
-            </IconButton>
-          ),
-        }}
-      />
-    </Box>
+      >
+        <TextField
+          label='Search'
+          variant='outlined'
+          value={searchTerm}
+          onChange={handleChange}
+          sx={{
+            flexGrow: 1,
+            mr: 1,
+            '& .MuiInputBase-input': {
+              height: '17px', // Adjusted height to 32px
+            },
+          }}
+          InputProps={{
+            endAdornment: (
+              <IconButton
+                type='submit'
+                color='primary'
+                aria-label='search'
+                onClick={handleSubmit}
+              >
+                <Search />
+              </IconButton>
+            ),
+          }}
+        />
+      </Box>
+      <Box sx={{ position: 'relative', width: '100%', p: '20px' }}>
+        <HorizontalScrollbar
+          data={bodyParts}
+          bodyPart={bodyPart}
+          setBodyPart={setBodyPart}
+        />
+      </Box>
+    </>
   );
 };
 
