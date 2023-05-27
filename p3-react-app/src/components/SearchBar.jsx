@@ -20,7 +20,6 @@ const SearchBar = ({ setExercises, bodyPart, setBodyPart }) => {
     };
 
     fetchExercisesData();
-    console.log('test');
   }, []);
 
   const handleChange = (e) => {

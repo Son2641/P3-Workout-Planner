@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import { Search } from '@mui/icons-material';
 import { exerciseOptions, fetchData } from '../utils/fetchData';
-import HorizontalScrollbar from './HorizontalScrollbar';
 
 const SearchBarForWorkouts = ({ setExercises, bodyPart, setBodyPart }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -20,7 +19,6 @@ const SearchBarForWorkouts = ({ setExercises, bodyPart, setBodyPart }) => {
     };
 
     fetchExercisesData();
-    console.log('test');
   }, []);
 
   const handleChange = (e) => {
@@ -29,7 +27,7 @@ const SearchBarForWorkouts = ({ setExercises, bodyPart, setBodyPart }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (searchTerm) {
+    if (searchTerm && typeof setExercises === 'function') {
       const exercisesData = await fetchData(
         'https://exercisedb.p.rapidapi.com/exercises',
         exerciseOptions
@@ -46,8 +44,6 @@ const SearchBarForWorkouts = ({ setExercises, bodyPart, setBodyPart }) => {
       setExercises(searchedExercises);
     }
   };
-
-  const memoizedBodyParts = useMemo(() => bodyParts, [bodyParts]);
 
   return (
     <>

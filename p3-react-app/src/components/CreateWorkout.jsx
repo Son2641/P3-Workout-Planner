@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import CreateWorkoutButton from './CreateWorkoutButton';
+import Button from '@mui/material/Button';
 import WorkoutTitleDialog from './WorkoutTitleDialog';
 import ExerciseForm from './ExerciseForm';
-import WorkoutDetails from './WorkoutDetails';
+import CreateWorkoutButton from './CreateWorkoutButton';
 
-const Workouts = () => {
-  const [workouts, setWorkouts] = useState([]);
+const CreateWorkout = () => {
   const [title, setTitle] = useState('');
   const [open, setOpen] = useState(false);
   const [exercises, setExercises] = useState([]);
@@ -23,22 +22,18 @@ const Workouts = () => {
 
   const handleWorkoutSubmit = () => {
     const workout = { title, exercises };
-    setWorkouts([...workouts, workout]);
+    const newWorkouts = [...workouts, workout];
+    setWorkouts(newWorkouts);
+    localStorage.setItem('workouts', JSON.stringify(newWorkouts));
     setTitle('');
     setExercises([]);
     setOpen(false);
   };
 
-  const handleWorkoutDelete = (index) => {
-    const newWorkouts = [...workouts];
-    newWorkouts.splice(index, 1);
-    setWorkouts(newWorkouts);
-  };
-
   return (
     <Box>
       <Typography variant='h4' component='h1' gutterBottom>
-        Workouts
+        Create Workout
       </Typography>
       <CreateWorkoutButton onClick={() => setOpen(true)} />
       <WorkoutTitleDialog
@@ -46,15 +41,6 @@ const Workouts = () => {
         onClose={() => setOpen(false)}
         onSubmit={handleTitleSubmit}
       />
-      {workouts.map((workout, index) => (
-        <Box key={index} sx={{ mb: 4 }}>
-          <WorkoutDetails
-            title={workout.title}
-            exercises={workout.exercises}
-            onDelete={() => handleWorkoutDelete(index)}
-          />
-        </Box>
-      ))}
       {title && (
         <ExerciseForm
           title={title}
@@ -67,4 +53,4 @@ const Workouts = () => {
   );
 };
 
-export default Workouts;
+export default CreateWorkout;

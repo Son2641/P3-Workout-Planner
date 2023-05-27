@@ -1,13 +1,13 @@
+import { useContext, useMemo } from 'react';
+import { ExercisesContext } from '../utils/ExercisesContext';
 import SearchBar from './SearchBar';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useState, useMemo } from 'react';
 import ExerciseList from './ExerciseList';
 
 const Exercises = () => {
-  const [exercises, setExercises] = useState([]);
-  const [bodyPart, setBodyPart] = useState('all');
-
+  const { exercises, setExercises, bodyPart, setBodyPart } =
+    useContext(ExercisesContext);
   const memoizedBodyPart = useMemo(() => bodyPart, [bodyPart]);
   const memoizedExercises = useMemo(() => exercises, [exercises]);
 
