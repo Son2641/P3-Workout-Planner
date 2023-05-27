@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
-import { Search } from '@mui/icons-material';
+import SearchIcon from '@mui/icons-material/Search';
 import { exerciseOptions, fetchData } from '../utils/fetchData';
 
-const SearchBarForWorkouts = ({ setExercises, bodyPart, setBodyPart }) => {
+const SearchBarForWorkouts = ({ setExercises }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [bodyParts, setBodyParts] = useState([]);
 
@@ -46,45 +46,43 @@ const SearchBarForWorkouts = ({ setExercises, bodyPart, setBodyPart }) => {
   };
 
   return (
-    <>
-      <Box
-        component='form'
-        onSubmit={handleSubmit}
+    <Box
+      component='form'
+      onSubmit={handleSubmit}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+      }}
+    >
+      <TextField
+        label='Search'
+        variant='outlined'
+        value={searchTerm}
+        onChange={handleChange}
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
+          flexGrow: 1,
+          mr: 1,
+          '& .MuiInputBase-input': {
+            height: '32px',
+          },
+          marginBottom: '10px',
         }}
-      >
-        <TextField
-          label='Search'
-          variant='outlined'
-          value={searchTerm}
-          onChange={handleChange}
-          sx={{
-            flexGrow: 1,
-            mr: 1,
-            '& .MuiInputBase-input': {
-              height: '17px', // Adjusted height to 32px
-            },
-            marginBottom: '10px',
-          }}
-          InputProps={{
-            endAdornment: (
-              <IconButton
-                type='submit'
-                color='primary'
-                aria-label='search'
-                onClick={handleSubmit}
-              >
-                <Search />
-              </IconButton>
-            ),
-          }}
-        />
-      </Box>
-    </>
+        InputProps={{
+          endAdornment: (
+            <IconButton
+              type='submit'
+              color='primary'
+              aria-label='search'
+              onClick={handleSubmit}
+            >
+              <SearchIcon />
+            </IconButton>
+          ),
+        }}
+      />
+    </Box>
   );
 };
 
