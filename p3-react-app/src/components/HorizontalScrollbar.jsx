@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import Box from '@mui/material/Box';
 import BodyPart from './BodyPart';
 import ImageList from '@mui/material/ImageList';
@@ -30,6 +30,8 @@ const HorizontalScrollbar = ({ data, bodyPart, setBodyPart }) => {
     };
   }, []);
 
+  const memoizedData = useMemo(() => data, [data]);
+
   return (
     <ImageList
       ref={imageListRef}
@@ -54,7 +56,7 @@ const HorizontalScrollbar = ({ data, bodyPart, setBodyPart }) => {
         height: '180px',
       }}
     >
-      {data.map((item) => (
+      {memoizedData.map((item) => (
         <ImageListItem key={item.id || item}>
           <Box
             itemId={item.id || item}

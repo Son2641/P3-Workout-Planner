@@ -1,12 +1,16 @@
 import SearchBar from './SearchBar';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import ExerciseList from './ExerciseList';
 
 const Exercises = () => {
   const [exercises, setExercises] = useState([]);
   const [bodyPart, setBodyPart] = useState('all');
+
+  const memoizedBodyPart = useMemo(() => bodyPart, [bodyPart]);
+  const memoizedExercises = useMemo(() => exercises, [exercises]);
+
   return (
     <>
       <Box sx={{ mx: 13 }}>
@@ -18,13 +22,13 @@ const Exercises = () => {
         </Typography>
         <SearchBar
           setExercises={setExercises}
-          bodyPart={bodyPart}
+          bodyPart={memoizedBodyPart}
           setBodyPart={setBodyPart}
         />
         <ExerciseList
           setExercises={setExercises}
-          bodyPart={bodyPart}
-          exercises={exercises}
+          bodyPart={memoizedBodyPart}
+          exercises={memoizedExercises}
         />
       </Box>
     </>

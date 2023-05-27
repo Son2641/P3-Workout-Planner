@@ -5,6 +5,7 @@ import NotFoundPage from './components/NotFoundPage';
 import Workouts from './components/Workouts';
 import HomePage from './components/HomePage';
 import LoginRegister from './components/LoginRegister';
+import ExerciseDetails from './components/ExerciseDetails';
 
 const Router = () => {
   return (
@@ -12,6 +13,7 @@ const Router = () => {
       <Route path='/' element={<HomePage />} />
       <Route path='/about' element={<AboutPage />} />
       <Route path='/exercises' element={<Exercises />} />
+      <Route path='/exercises/exercise/:id' element={<ExerciseDetails />} />
       <Route path='/workouts' element={<Workouts />} />
       <Route path='/login' element={<LoginRegister />} />
       <Route path='*' element={<NotFoundPage />} />

@@ -6,6 +6,7 @@ import { Search } from '@mui/icons-material';
 import { exerciseOptions, fetchData } from '../utils/fetchData';
 import { useEffect } from 'react';
 import HorizontalScrollbar from './HorizontalScrollbar';
+import { useMemo } from 'react';
 
 const SearchBar = ({ setExercises, bodyPart, setBodyPart }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -21,6 +22,7 @@ const SearchBar = ({ setExercises, bodyPart, setBodyPart }) => {
     };
 
     fetchExercisesData();
+    console.log('test');
   }, []);
 
   const handleChange = (e) => {
@@ -44,8 +46,11 @@ const SearchBar = ({ setExercises, bodyPart, setBodyPart }) => {
 
       setSearchTerm('');
       setExercises(searchedExercises);
+      console.log('test1');
     }
   };
+
+  const memoizedBodyParts = useMemo(() => bodyParts, [bodyParts]);
 
   return (
     <>
@@ -87,7 +92,7 @@ const SearchBar = ({ setExercises, bodyPart, setBodyPart }) => {
       </Box>
       <Box sx={{ position: 'relative', width: '100%', p: '20px' }}>
         <HorizontalScrollbar
-          data={bodyParts}
+          data={memoizedBodyParts}
           bodyPart={bodyPart}
           setBodyPart={setBodyPart}
         />

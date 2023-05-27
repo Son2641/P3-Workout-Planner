@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -13,10 +13,11 @@ const ExerciseList = ({ exercises, setExercises, bodyPart }) => {
 
   const indexOfLastExercise = currentPage * exercisesPerPage;
   const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
-  const currentExercises = exercises.slice(
-    indexOfFirstExercise,
-    indexOfLastExercise
-  );
+  const currentExercises = useMemo(() => {
+    const indexOfLastExercise = currentPage * exercisesPerPage;
+    const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
+    return exercises.slice(indexOfFirstExercise, indexOfLastExercise);
+  }, [exercises, currentPage]);
 
   const paginate = (e, value) => {
     setCurrentPage(value);
