@@ -36,7 +36,7 @@ const Detail = ({ exerciseDetail }) => {
         p: '20px',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
+        width: '80%',
       }}
     >
       <img
@@ -44,7 +44,11 @@ const Detail = ({ exerciseDetail }) => {
         alt={memoizedName}
         loading='lazy'
         className='detail-image'
-        style={{ borderTop: '4px solid #6F61FE', marginTop: '60px' }}
+        style={{
+          borderTop: '4px solid #6F61FE',
+          marginTop: '60px',
+          boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+        }}
       />
       <Stack sx={{ gap: { lg: '10px', xs: '20px' } }}>
         <Typography

@@ -6,7 +6,7 @@ import { Search } from '@mui/icons-material';
 import { exerciseOptions, fetchData } from '../utils/fetchData';
 import HorizontalScrollbar from './HorizontalScrollbar';
 
-const SearchBar = ({ setExercises, bodyPart, setBodyPart }) => {
+const SearchBarForWorkouts = ({ setExercises, bodyPart, setBodyPart }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [bodyParts, setBodyParts] = useState([]);
 
@@ -58,7 +58,7 @@ const SearchBar = ({ setExercises, bodyPart, setBodyPart }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          width: '40%',
+          width: '100%',
         }}
       >
         <TextField
@@ -72,6 +72,7 @@ const SearchBar = ({ setExercises, bodyPart, setBodyPart }) => {
             '& .MuiInputBase-input': {
               height: '17px', // Adjusted height to 32px
             },
+            marginBottom: '10px',
           }}
           InputProps={{
             endAdornment: (
@@ -87,15 +88,8 @@ const SearchBar = ({ setExercises, bodyPart, setBodyPart }) => {
           }}
         />
       </Box>
-      <Box sx={{ position: 'relative', width: '100%', p: '20px' }}>
-        <HorizontalScrollbar
-          data={memoizedBodyParts}
-          bodyPart={bodyPart}
-          setBodyPart={setBodyPart}
-        />
-      </Box>
     </>
   );
 };
 
-export default React.memo(SearchBar);
+export default SearchBarForWorkouts;
