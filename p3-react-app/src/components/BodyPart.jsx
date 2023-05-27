@@ -1,3 +1,4 @@
+import React from 'react';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import gym from '../assets/gym.png';
@@ -48,4 +49,4 @@ const BodyPart = ({ item, setBodyPart, bodyPart }) => {
   );
 };
 
-export default BodyPart;
+export default React.memo(BodyPart);

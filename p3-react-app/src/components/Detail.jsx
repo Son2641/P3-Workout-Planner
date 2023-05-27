@@ -13,29 +13,67 @@ const Detail = ({ exerciseDetail }) => {
   const memoizedName = useMemo(() => name, [name]);
   const memoizedTarget = useMemo(() => target, [target]);
 
+  const extraDetail = [
+    {
+      icon: bodypartImg,
+      name: bodyPart,
+    },
+    {
+      icon: targetImg,
+      name: target,
+    },
+    {
+      icon: equipmentImg,
+      name: equipment,
+    },
+  ];
+
   return (
     <Stack
       gap='60px'
-      sx={{ flexDirection: { lg: 'row' }, p: '20px', alignItems: 'center' }}
+      sx={{
+        flexDirection: { lg: 'row' },
+        p: '20px',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+      }}
     >
       <img
         src={gifUrl}
         alt={memoizedName}
         loading='lazy'
         className='detail-image'
+        style={{ borderTop: '4px solid #6F61FE', marginTop: '60px' }}
       />
-      <Stack sx={{ gap: { lg: '35px', lg: '20px' } }}>
+      <Stack sx={{ gap: { lg: '10px', xs: '20px' } }}>
         <Typography
           variant='h5'
-          sx={{ textTransform: 'capitalize', fontWeight: 'bold' }}
+          sx={{
+            textTransform: 'capitalize',
+            fontWeight: 'bold',
+            color: 'text.secondary',
+          }}
         >
           {name}
         </Typography>
-        <Typography>
+        <Typography sx={{ color: 'text.primary' }}>
           <span style={{ textTransform: 'capitalize' }}>{memoizedName}</span> is
           one of the many exercises to target your {memoizedTarget}.<br /> Just
           follow the picture and enjoy working out!
         </Typography>
+        {extraDetail.map((item) => (
+          <Stack key={item.name} direction='row' gap='24px' alignItems='center'>
+            <Button variant='contained' color='secondary'>
+              <img src={item.icon} style={{ width: '30px', height: '30px' }} />
+            </Button>
+            <Typography
+              sx={{ textTransform: 'capitalize', color: 'text.primary' }}
+            >
+              {item.name}
+            </Typography>
+          </Stack>
+        ))}
       </Stack>
     </Stack>
   );

@@ -76,4 +76,4 @@ const HorizontalScrollbar = ({ data, bodyPart, setBodyPart }) => {
   );
 };
 
-export default HorizontalScrollbar;
+export default React.memo(HorizontalScrollbar);

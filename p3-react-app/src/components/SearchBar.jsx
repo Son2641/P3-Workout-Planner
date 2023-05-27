@@ -1,12 +1,10 @@
+import React, { useState, useEffect, useMemo } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
-import { useState } from 'react';
 import { Search } from '@mui/icons-material';
 import { exerciseOptions, fetchData } from '../utils/fetchData';
-import { useEffect } from 'react';
 import HorizontalScrollbar from './HorizontalScrollbar';
-import { useMemo } from 'react';
 
 const SearchBar = ({ setExercises, bodyPart, setBodyPart }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -101,4 +99,4 @@ const SearchBar = ({ setExercises, bodyPart, setBodyPart }) => {
   );
 };
 
-export default SearchBar;
+export default React.memo(SearchBar);
