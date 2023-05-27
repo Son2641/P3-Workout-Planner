@@ -21,7 +21,7 @@ const ExerciseList = ({ exercises, setExercises, bodyPart }) => {
   const paginate = (e, value) => {
     setCurrentPage(value);
 
-    window.scrollTo({ top: 1800, behavior: 'smooth' });
+    window.scrollTo({ top: 1000, behavior: 'smooth' });
   };
 
   useEffect(() => {

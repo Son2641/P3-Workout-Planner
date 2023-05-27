@@ -25,7 +25,7 @@ const BodyPart = ({ item, setBodyPart, bodyPart }) => {
       }}
       onClick={() => {
         setBodyPart(item);
-        window.scrollTo({ top: 1800, behavior: 'smooth', left: 100 });
+        window.scrollTo({ top: 500, behavior: 'smooth' });
       }}
     >
       <CardMedia

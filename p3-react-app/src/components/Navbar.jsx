@@ -4,6 +4,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import { CardMedia } from '@mui/material';
+import fitnessImg from '../assets/fitnessImg.png';
 
 const Navbar = () => {
   return (
@@ -17,12 +19,19 @@ const Navbar = () => {
         }}
       >
         <Toolbar>
+          <CardMedia
+            component='img'
+            alt='hero-img'
+            image={fitnessImg}
+            sx={{ width: '17px', height: '17px', marginRight: '10px' }}
+          />
           <Typography
             variant='h6'
             component='div'
             sx={{
               flexGrow: 1,
               color: 'text.secondary',
+              fontWeight: 'bold',
             }}
           >
             Son Fitness
