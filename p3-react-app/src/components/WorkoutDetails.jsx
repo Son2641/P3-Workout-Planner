@@ -24,7 +24,7 @@ const WorkoutDetails = ({
         borderRadius: '10px',
       }}
     >
-      <Typography variant='h4' component='h1' gutterBottom>
+      <Typography variant='h5' component='h2' gutterBottom>
         Workout Name: {title}
       </Typography>
       {exercises.map((exercise, index) => (

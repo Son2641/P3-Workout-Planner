@@ -87,6 +87,7 @@ const Workouts = () => {
         boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.3)',
         padding: '10px',
         borderRadius: '20px',
+        paddingLeft: '15px',
       }}
     >
       <Typography

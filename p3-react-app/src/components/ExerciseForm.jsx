@@ -68,8 +68,8 @@ const ExerciseForm = ({
         borderRadius: '10px',
       }}
     >
-      <Typography variant='h4' component='h1' gutterBottom>
-        Workout Name:{title}
+      <Typography variant='h5' component='h2' gutterBottom>
+        Workout Name: {title}
       </Typography>
       <Box sx={{ mt: 2 }}>
         <Button variant='contained' onClick={() => setOpen(true)}>
