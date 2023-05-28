@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -16,15 +16,19 @@ const ExerciseFormDialog = ({
   onEdit,
   editIndex,
 }) => {
-  const [reps, setReps] = useState(editMode ? exerciseToEdit.reps : '');
-  const [sets, setSets] = useState(editMode ? exerciseToEdit.sets : '');
-  const [weight, setWeight] = useState(editMode ? exerciseToEdit.weight : '');
-  const [selectedExercise, setSelectedExercise] = useState(
-    editMode && exerciseToEdit.hasOwnProperty('selectedExercise')
-      ? exerciseToEdit.selectedExercise
-      : null
-  );
+  const [reps, setReps] = useState('');
+  const [sets, setSets] = useState('');
+  const [weight, setWeight] = useState('');
+  const [selectedExercise, setSelectedExercise] = useState(null);
 
+  useEffect(() => {
+    if (editMode && exerciseToEdit) {
+      setReps(exerciseToEdit.reps);
+      setSets(exerciseToEdit.sets);
+      setWeight(exerciseToEdit.weight);
+      setSelectedExercise(exerciseToEdit.selectedExercise);
+    }
+  }, [editMode, exerciseToEdit]);
   const handleExerciseSelect = (exercise) => {
     setSelectedExercise(exercise);
   };
