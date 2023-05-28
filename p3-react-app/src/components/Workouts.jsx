@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import CreateWorkoutButton from './CreateWorkoutButton';
@@ -11,6 +11,8 @@ const Workouts = () => {
   const [title, setTitle] = useState('');
   const [open, setOpen] = useState(false);
   const [exercises, setExercises] = useState([]);
+  const [currentExercises, setCurrentExercises] = useState([]);
+  const lastIdRef = useRef(0);
 
   const handleTitleSubmit = (title) => {
     setTitle(title);
@@ -18,14 +20,16 @@ const Workouts = () => {
   };
 
   const handleExerciseSubmit = (exercise) => {
-    setExercises([...exercises, exercise]);
+    const newExercise = { ...exercise, id: lastIdRef.current };
+    setCurrentExercises((prevExercises) => [...prevExercises, newExercise]);
+    lastIdRef.current += 1;
   };
 
   const handleWorkoutSubmit = () => {
-    const workout = { title, exercises };
+    const workout = { title, currentExercises };
     setWorkouts([...workouts, workout]);
     setTitle('');
-    setExercises([]);
+    setCurrentExercises([]);
     setOpen(false);
   };
 
@@ -47,10 +51,11 @@ const Workouts = () => {
         onSubmit={handleTitleSubmit}
       />
       {workouts.map((workout, index) => (
-        <Box key={index} sx={{ mb: 4 }}>
+        <Box key={`workout-${index}`} sx={{ mb: 4 }}>
           <WorkoutDetails
+            key={`workout-details-${index}`}
             title={workout.title}
-            exercises={workout.exercises}
+            exercises={workout.currentExercises}
             onDelete={() => handleWorkoutDelete(index)}
           />
         </Box>
@@ -58,8 +63,8 @@ const Workouts = () => {
       {title && (
         <ExerciseForm
           title={title}
-          exercises={exercises}
-          onSubmit={handleExerciseSubmit}
+          currentExercises={currentExercises}
+          onSubmit={(exercise) => handleExerciseSubmit(exercise)}
           onWorkoutSubmit={handleWorkoutSubmit}
         />
       )}

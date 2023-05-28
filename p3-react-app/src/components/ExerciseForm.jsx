@@ -1,48 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import SearchBarForWorkouts from './SearchBarForWorkouts';
-import ExerciseListForWorkout from './ExerciseListForWorkout';
 import ExerciseFormDialog from './ExerciseFormDialog';
 import Button from '@mui/material/Button';
-import { exerciseOptions, fetchData } from '../utils/fetchData';
 
-const ExerciseForm = ({ title, onSubmit, onWorkoutSubmit }) => {
+const ExerciseForm = ({
+  title,
+  onWorkoutSubmit,
+  onSubmit,
+  currentExercises,
+}) => {
   const [open, setOpen] = useState(false);
-  const [selectedExercise, setSelectedExercise] = useState(null);
   const [exercises, setExercises] = useState([]);
 
+  useEffect(() => {
+    setExercises(currentExercises);
+  }, [currentExercises]);
+
   const handleExerciseSubmit = (exercise) => {
+    setExercises((prevExercises) => [...prevExercises, exercise]);
     onSubmit(exercise);
-    setOpen(false);
   };
 
   const handleWorkoutSubmit = () => {
-    if (selectedExercise) {
-      onWorkoutSubmit(selectedExercise);
+    if (exercises.length > 0) {
+      onWorkoutSubmit({ title, exercises });
+      setExercises([]);
     }
-  };
-
-  const handleSearch = async (query) => {
-    const searchString = String(query).toLowerCase();
-
-    const searchedExercises = await fetchData(
-      'https://exercisedb.p.rapidapi.com/exercises',
-      exerciseOptions
-    );
-
-    const filteredExercises = searchedExercises.filter(
-      (exercise) =>
-        (exercise.name && exercise.name.toLowerCase().includes(searchString)) ||
-        (exercise.target &&
-          exercise.target.toLowerCase().includes(searchString)) ||
-        (exercise.equipment &&
-          exercise.equipment.toLowerCase().includes(searchString)) ||
-        (exercise.bodypart &&
-          exercise.bodypart.toLowerCase().includes(searchString))
-    );
-
-    setExercises(filteredExercises);
   };
 
   return (
@@ -50,11 +34,6 @@ const ExerciseForm = ({ title, onSubmit, onWorkoutSubmit }) => {
       <Typography variant='h5' component='h2' gutterBottom>
         {title}
       </Typography>
-      <SearchBarForWorkouts setExercises={handleSearch} />
-      <ExerciseListForWorkout
-        exercises={exercises}
-        onSelect={setSelectedExercise}
-      />
       <Box sx={{ mt: 2 }}>
         <Button variant='contained' onClick={() => setOpen(true)}>
           Add Exercise
@@ -63,13 +42,26 @@ const ExerciseForm = ({ title, onSubmit, onWorkoutSubmit }) => {
       <ExerciseFormDialog
         open={open}
         onClose={() => setOpen(false)}
-        onSubmit={(exercise) => handleExerciseSubmit(exercise)}
+        onSubmit={handleExerciseSubmit}
       />
-      <Box sx={{ mt: 2 }}>
-        <Button variant='contained' onClick={handleWorkoutSubmit}>
-          Submit Workout
-        </Button>
-      </Box>
+
+      {exercises.length > 0 && (
+        <Box>
+          {exercises.map((exercise, index) => (
+            <Box key={`exercise-${index}`} sx={{ mt: 2 }}>
+              <Typography variant='subtitle1' component='p'>
+                Exercise: {exercise.selectedExercise}, Reps: {exercise.reps},
+                Sets: {exercise.sets}, Weight: {exercise.weight}
+              </Typography>
+            </Box>
+          ))}
+          <Box sx={{ mt: 2 }}>
+            <Button variant='contained' onClick={handleWorkoutSubmit}>
+              Submit Workout
+            </Button>
+          </Box>
+        </Box>
+      )}
     </Box>
   );
 };

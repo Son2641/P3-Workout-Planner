@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 import { fetchData, exerciseOptions } from '../utils/fetchData';
 
 const ExerciseListForWorkout = ({ onSelect }) => {
   const [exercises, setExercises] = useState([]);
-  const [selectedExercise, setSelectedExercise] = useState('');
+  const [selectedExercise, setSelectedExercise] = useState(null);
 
   useEffect(() => {
     const fetchExercisesData = async () => {
@@ -15,35 +13,30 @@ const ExerciseListForWorkout = ({ onSelect }) => {
         'https://exercisedb.p.rapidapi.com/exercises',
         exerciseOptions
       );
-
-      setExercises(exercisesData);
+      if (Array.isArray(exercisesData)) {
+        // Ensure exercisesData is an array
+        setExercises(exercisesData);
+      }
     };
 
     fetchExercisesData();
   }, []);
 
-  const handleExerciseChange = (event) => {
-    const value = event.target.value;
-    setSelectedExercise(value); // Update the selectedExercise state
+  const handleExerciseChange = (event, value) => {
     onSelect(value);
   };
 
   return (
-    <FormControl fullWidth>
-      <InputLabel id='exercise-select-label'>Select Exercise</InputLabel>
-      <Select
-        labelId='exercise-select-label'
-        id='exercise-select'
-        onChange={handleExerciseChange} // Update the event handler
-        value={selectedExercise} // Pass the selectedExercise state as the value
-      >
-        {exercises.map((exercise) => (
-          <MenuItem key={exercise.id} value={exercise.name}>
-            {exercise.name}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <Autocomplete
+      disablePortal
+      id='exercise-select'
+      options={exercises}
+      getOptionLabel={(exercise) => `${exercise.name} (${exercise.id})`} // Include exercise ID in the label
+      onChange={handleExerciseChange} // Update the event handler
+      renderInput={(params) => (
+        <TextField {...params} label='Select Exercise' />
+      )}
+    />
   );
 };
 

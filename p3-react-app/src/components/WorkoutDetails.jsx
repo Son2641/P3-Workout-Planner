@@ -1,29 +1,21 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
-const WorkoutDetails = ({ title, exercises }) => {
+const WorkoutDetails = ({ title, exercises, onDelete }) => {
   return (
     <Box>
       <Typography variant='h4' component='h1' gutterBottom>
         {title}
       </Typography>
       {exercises.map((exercise, index) => (
-        <Box key={index} sx={{ mb: 2 }}>
-          <Typography variant='h6' component='h2' gutterBottom>
-            {exercise.name}
-          </Typography>
-          <Typography variant='body1' gutterBottom>
-            Reps: {exercise.reps}
-          </Typography>
-          <Typography variant='body1' gutterBottom>
-            Sets: {exercise.sets}
-          </Typography>
-          <Typography variant='body1' gutterBottom>
-            Weight: {exercise.weight}
-          </Typography>
-        </Box>
+        <Typography key={`exercise-${index}`} variant='subtitle1' component='p'>
+          Exercise: {exercise.selectedExercise}, Reps: {exercise.reps}, Sets:{' '}
+          {exercise.sets}, Weight: {exercise.weight}
+        </Typography>
       ))}
+      <Button onClick={onDelete}>Delete Workout</Button>
     </Box>
   );
 };

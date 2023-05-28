@@ -3,17 +3,33 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import ExerciseListForWorkout from './ExerciseListForWorkout';
+import TextField from '@mui/material/TextField';
 
 const ExerciseFormDialog = ({ open, onClose, onSubmit }) => {
-  const [name, setName] = useState('');
   const [reps, setReps] = useState('');
   const [sets, setSets] = useState('');
   const [weight, setWeight] = useState('');
+  const [selectedExercise, setSelectedExercise] = useState(null);
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);
+  const handleExerciseSelect = (exercise) => {
+    setSelectedExercise(exercise);
+  };
+
+  const handleSubmit = () => {
+    const exerciseData = {
+      selectedExercise: selectedExercise ? selectedExercise.name : '',
+      reps,
+      sets,
+      weight,
+    };
+    onSubmit(exerciseData);
+    setReps('');
+    setSets('');
+    setWeight('');
+    onClose();
+    console.log(exerciseData);
   };
 
   const handleRepsChange = (event) => {
@@ -28,27 +44,11 @@ const ExerciseFormDialog = ({ open, onClose, onSubmit }) => {
     setWeight(event.target.value);
   };
 
-  const handleSubmit = () => {
-    onSubmit({ exercise: name, reps, sets, weight });
-    setName('');
-    setReps('');
-    setSets('');
-    setWeight('');
-  };
-
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Add Exercise</DialogTitle>
       <DialogContent>
-        <TextField
-          autoFocus
-          margin='dense'
-          label='Exercise Name'
-          type='text'
-          fullWidth
-          value={name}
-          onChange={handleNameChange}
-        />
+        <ExerciseListForWorkout onSelect={handleExerciseSelect} />
         <TextField
           margin='dense'
           label='Reps'
