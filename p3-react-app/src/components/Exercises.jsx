@@ -16,7 +16,8 @@ const Exercises = () => {
       <Box sx={{ mx: 13 }}>
         <Typography
           variant='h5'
-          sx={{ my: 2, fontWeight: 'bold', color: 'text.primary' }}
+          color='text.primary'
+          sx={{ my: 2, fontWeight: 'bold' }}
         >
           Search Exercises
         </Typography>

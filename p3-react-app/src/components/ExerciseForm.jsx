@@ -68,7 +68,7 @@ const ExerciseForm = ({
         borderRadius: '10px',
       }}
     >
-      <Typography variant='h5' component='h2' gutterBottom>
+      <Typography variant='h5' component='h2' gutterBottom color='text.primary'>
         Workout Name: {title}
       </Typography>
       <Box sx={{ mt: 2 }}>
@@ -98,6 +98,7 @@ const ExerciseForm = ({
                 variant='subtitle1'
                 component='p'
                 textTransform='capitalize'
+                color='text.primary'
               >
                 Exercise: {exercise.selectedExercise}, <br />
                 Reps: {exercise.reps}, Sets: {exercise.sets}, Weight:{' '}

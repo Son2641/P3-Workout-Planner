@@ -90,12 +90,7 @@ const Workouts = () => {
         paddingLeft: '15px',
       }}
     >
-      <Typography
-        variant='h4'
-        component='h1'
-        gutterBottom
-        sx={{ color: 'text.primary' }}
-      >
+      <Typography variant='h4' component='h1' gutterBottom color='text.primary'>
         Start your fitness journey by creating your own workouts!
       </Typography>
       <CreateWorkoutButton onClick={() => setOpen(true)} />

@@ -17,7 +17,7 @@ const AboutPage = () => {
         <Typography variant='h4' color='text.secondary' fontWeight='bold'>
           Son Fitness
         </Typography>
-        <Typography variant='h6'>
+        <Typography variant='h6' color='text.primary'>
           Welcome to the Son Fitness App, your digital exercise and workout
           guide for beginners. Easily search for exercises by name or body part
           category and follow along with instructional GIFs. Create your own
@@ -38,7 +38,7 @@ const AboutPage = () => {
         <Typography variant='h4' color='text.secondary' fontWeight='bold'>
           How to Use the App
         </Typography>
-        <Typography variant='h6'>
+        <Typography variant='h6' color='text.primary'>
           <ul>
             <li>Search for Exercises you would like to do.</li>
             <li>Search by exercise name or by bodypart.</li>

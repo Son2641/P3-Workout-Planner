@@ -49,7 +49,7 @@ const ExerciseList = ({ exercises, setExercises, bodyPart }) => {
 
   return (
     <Box id='exercises' sx={{ p: '20px' }}>
-      <Typography variant='h4' mb='30px'>
+      <Typography variant='h4' mb='30px' color='text.primary'>
         Showing Results:
       </Typography>
       <Stack

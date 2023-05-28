@@ -38,7 +38,7 @@ const CreateWorkout = () => {
 
   return (
     <Box>
-      <Typography variant='h4' component='h1' gutterBottom>
+      <Typography variant='h4' component='h1' gutterBottom color='text.primary'>
         Create Workout
       </Typography>
       <CreateWorkoutButton onClick={() => setOpen(true)} />
