@@ -12,20 +12,29 @@ const ExerciseForm = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [exercises, setExercises] = useState([]);
+  const [editIndex, setEditIndex] = useState(null);
 
   useEffect(() => {
     setExercises(currentExercises);
   }, [currentExercises]);
 
   const handleExerciseSubmit = (exercise) => {
-    setExercises((prevExercises) => [...prevExercises, exercise]);
+    if (editIndex !== null) {
+      // Editing an exercise
+      const updatedExercises = [...exercises];
+      updatedExercises[editIndex] = exercise;
+      setExercises(updatedExercises);
+      setEditIndex(null);
+    } else {
+      // Adding a new exercise
+      setExercises((prevExercises) => [...prevExercises, exercise]);
+    }
     onSubmit(exercise);
   };
 
-  const handleExerciseEdit = (index, updatedExercise) => {
-    const updatedExercises = [...exercises];
-    updatedExercises[index] = updatedExercise;
-    setExercises(updatedExercises);
+  const handleExerciseEdit = (index) => {
+    setEditIndex(index);
+    setOpen(true);
   };
 
   const handleExerciseDelete = (index) => {
@@ -53,8 +62,13 @@ const ExerciseForm = ({
       </Box>
       <ExerciseFormDialog
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          setOpen(false);
+          setEditIndex(null);
+        }}
         onSubmit={handleExerciseSubmit}
+        editMode={editIndex !== null}
+        exerciseToEdit={editIndex !== null ? exercises[editIndex] : null}
       />
 
       {exercises.length > 0 && (
@@ -68,7 +82,7 @@ const ExerciseForm = ({
               <Box sx={{ mt: 1 }}>
                 <Button
                   variant='outlined'
-                  onClick={() => setOpen(true)}
+                  onClick={() => handleExerciseEdit(index)}
                   sx={{ mr: 1 }}
                 >
                   Edit

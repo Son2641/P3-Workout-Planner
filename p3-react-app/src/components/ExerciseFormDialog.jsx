@@ -7,24 +7,43 @@ import Button from '@mui/material/Button';
 import ExerciseListForWorkout from './ExerciseListForWorkout';
 import TextField from '@mui/material/TextField';
 
-const ExerciseFormDialog = ({ open, onClose, onSubmit }) => {
-  const [reps, setReps] = useState('');
-  const [sets, setSets] = useState('');
-  const [weight, setWeight] = useState('');
-  const [selectedExercise, setSelectedExercise] = useState(null);
+const ExerciseFormDialog = ({
+  open,
+  onClose,
+  onSubmit,
+  editMode,
+  exerciseToEdit,
+}) => {
+  const [reps, setReps] = useState(editMode ? exerciseToEdit.reps : '');
+  const [sets, setSets] = useState(editMode ? exerciseToEdit.sets : '');
+  const [weight, setWeight] = useState(editMode ? exerciseToEdit.weight : '');
+  const [selectedExercise, setSelectedExercise] = useState(
+    editMode ? exerciseToEdit.selectedExercise : null
+  );
 
   const handleExerciseSelect = (exercise) => {
     setSelectedExercise(exercise);
   };
 
   const handleSubmit = () => {
-    const exerciseData = {
-      selectedExercise: selectedExercise ? selectedExercise.name : '',
-      reps,
-      sets,
-      weight,
-    };
-    onSubmit(exerciseData);
+    if (editMode) {
+      const editedExercise = {
+        ...exerciseToEdit,
+        selectedExercise: selectedExercise ? selectedExercise.name : '',
+        reps,
+        sets,
+        weight,
+      };
+      onSubmit(editedExercise);
+    } else {
+      const newExercise = {
+        selectedExercise: selectedExercise ? selectedExercise.name : '',
+        reps,
+        sets,
+        weight,
+      };
+      onSubmit(newExercise);
+    }
     setReps('');
     setSets('');
     setWeight('');
@@ -46,7 +65,7 @@ const ExerciseFormDialog = ({ open, onClose, onSubmit }) => {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Add Exercise</DialogTitle>
+      <DialogTitle>{editMode ? 'Edit Exercise' : 'Add Exercise'}</DialogTitle>
       <DialogContent>
         <ExerciseListForWorkout onSelect={handleExerciseSelect} />
         <TextField
@@ -76,7 +95,7 @@ const ExerciseFormDialog = ({ open, onClose, onSubmit }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Add</Button>
+        <Button onClick={handleSubmit}>{editMode ? 'Save' : 'Add'}</Button>
       </DialogActions>
     </Dialog>
   );
