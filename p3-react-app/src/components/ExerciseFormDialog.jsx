@@ -28,8 +28,8 @@ const ExerciseFormDialog = ({ open, onClose, onSubmit }) => {
     setReps('');
     setSets('');
     setWeight('');
+    setSelectedExercise(null);
     onClose();
-    console.log(exerciseData);
   };
 
   const handleRepsChange = (event) => {

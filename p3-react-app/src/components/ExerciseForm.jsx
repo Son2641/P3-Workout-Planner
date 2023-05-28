@@ -22,6 +22,18 @@ const ExerciseForm = ({
     onSubmit(exercise);
   };
 
+  const handleExerciseEdit = (index, updatedExercise) => {
+    const updatedExercises = [...exercises];
+    updatedExercises[index] = updatedExercise;
+    setExercises(updatedExercises);
+  };
+
+  const handleExerciseDelete = (index) => {
+    const updatedExercises = [...exercises];
+    updatedExercises.splice(index, 1);
+    setExercises(updatedExercises);
+  };
+
   const handleWorkoutSubmit = () => {
     if (exercises.length > 0) {
       onWorkoutSubmit({ title, exercises });
@@ -53,6 +65,22 @@ const ExerciseForm = ({
                 Exercise: {exercise.selectedExercise}, Reps: {exercise.reps},
                 Sets: {exercise.sets}, Weight: {exercise.weight}
               </Typography>
+              <Box sx={{ mt: 1 }}>
+                <Button
+                  variant='outlined'
+                  onClick={() => setOpen(true)}
+                  sx={{ mr: 1 }}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant='outlined'
+                  color='error'
+                  onClick={() => handleExerciseDelete(index)}
+                >
+                  Delete
+                </Button>
+              </Box>
             </Box>
           ))}
           <Box sx={{ mt: 2 }}>

@@ -39,6 +39,22 @@ const Workouts = () => {
     setWorkouts(newWorkouts);
   };
 
+  const handleExerciseEdit = (workoutIndex, exerciseIndex, editedExercise) => {
+    const updatedWorkouts = [...workouts];
+    const editedWorkout = { ...updatedWorkouts[workoutIndex] };
+    editedWorkout.currentExercises[exerciseIndex] = editedExercise;
+    updatedWorkouts[workoutIndex] = editedWorkout;
+    setWorkouts(updatedWorkouts);
+  };
+
+  const handleExerciseDelete = (workoutIndex, exerciseIndex) => {
+    const updatedWorkouts = [...workouts];
+    const editedWorkout = { ...updatedWorkouts[workoutIndex] };
+    editedWorkout.currentExercises.splice(exerciseIndex, 1);
+    updatedWorkouts[workoutIndex] = editedWorkout;
+    setWorkouts(updatedWorkouts);
+  };
+
   return (
     <Box>
       <Typography variant='h4' component='h1' gutterBottom>
@@ -50,13 +66,19 @@ const Workouts = () => {
         onClose={() => setOpen(false)}
         onSubmit={handleTitleSubmit}
       />
-      {workouts.map((workout, index) => (
-        <Box key={`workout-${index}`} sx={{ mb: 4 }}>
+      {workouts.map((workout, workoutIndex) => (
+        <Box key={`workout-${workoutIndex}`} sx={{ mb: 4 }}>
           <WorkoutDetails
-            key={`workout-details-${index}`}
+            key={`workout-details-${workoutIndex}`}
             title={workout.title}
             exercises={workout.currentExercises}
-            onDelete={() => handleWorkoutDelete(index)}
+            onDelete={() => handleWorkoutDelete(workoutIndex)}
+            onExerciseEdit={(exerciseIndex, editedExercise) =>
+              handleExerciseEdit(workoutIndex, exerciseIndex, editedExercise)
+            }
+            onExerciseDelete={(exerciseIndex) =>
+              handleExerciseDelete(workoutIndex, exerciseIndex)
+            }
           />
         </Box>
       ))}
@@ -64,7 +86,7 @@ const Workouts = () => {
         <ExerciseForm
           title={title}
           currentExercises={currentExercises}
-          onSubmit={(exercise) => handleExerciseSubmit(exercise)}
+          onSubmit={handleExerciseSubmit}
           onWorkoutSubmit={handleWorkoutSubmit}
         />
       )}
