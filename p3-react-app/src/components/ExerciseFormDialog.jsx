@@ -13,12 +13,16 @@ const ExerciseFormDialog = ({
   onSubmit,
   editMode,
   exerciseToEdit,
+  onEdit,
+  editIndex,
 }) => {
   const [reps, setReps] = useState(editMode ? exerciseToEdit.reps : '');
   const [sets, setSets] = useState(editMode ? exerciseToEdit.sets : '');
   const [weight, setWeight] = useState(editMode ? exerciseToEdit.weight : '');
   const [selectedExercise, setSelectedExercise] = useState(
-    editMode ? exerciseToEdit.selectedExercise : null
+    editMode && exerciseToEdit.hasOwnProperty('selectedExercise')
+      ? exerciseToEdit.selectedExercise
+      : null
   );
 
   const handleExerciseSelect = (exercise) => {
@@ -26,24 +30,19 @@ const ExerciseFormDialog = ({
   };
 
   const handleSubmit = () => {
+    const editedExercise = {
+      selectedExercise: selectedExercise ? selectedExercise.name : '',
+      reps,
+      sets,
+      weight,
+    };
+
     if (editMode) {
-      const editedExercise = {
-        ...exerciseToEdit,
-        selectedExercise: selectedExercise ? selectedExercise.name : '',
-        reps,
-        sets,
-        weight,
-      };
-      onSubmit(editedExercise);
+      onEdit(editIndex, editedExercise);
     } else {
-      const newExercise = {
-        selectedExercise: selectedExercise ? selectedExercise.name : '',
-        reps,
-        sets,
-        weight,
-      };
-      onSubmit(newExercise);
+      onSubmit(editedExercise);
     }
+
     setReps('');
     setSets('');
     setWeight('');

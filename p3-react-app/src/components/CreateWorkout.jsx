@@ -30,6 +30,12 @@ const CreateWorkout = () => {
     setOpen(false);
   };
 
+  const handleWorkoutCancel = () => {
+    setTitle('');
+    setExercises([]);
+    setOpen(false);
+  };
+
   return (
     <Box>
       <Typography variant='h4' component='h1' gutterBottom>
@@ -38,13 +44,13 @@ const CreateWorkout = () => {
       <CreateWorkoutButton onClick={() => setOpen(true)} />
       <WorkoutTitleDialog
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={handleWorkoutCancel}
         onSubmit={handleTitleSubmit}
       />
       {title && (
         <ExerciseForm
           title={title}
-          exercises={exercises}
+          currentExercises={exercises}
           onSubmit={handleExerciseSubmit}
           onWorkoutSubmit={handleWorkoutSubmit}
         />

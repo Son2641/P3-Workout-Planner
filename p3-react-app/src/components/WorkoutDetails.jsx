@@ -10,6 +10,11 @@ const WorkoutDetails = ({
   onExerciseEdit,
   onExerciseDelete,
 }) => {
+  const handleExerciseEdit = (index) => {
+    const exerciseToEdit = exercises[index];
+    onExerciseEdit(index, exerciseToEdit);
+  };
+
   return (
     <Box>
       <Typography variant='h4' component='h1' gutterBottom>
@@ -22,7 +27,10 @@ const WorkoutDetails = ({
             Sets: {exercise.sets}, Weight: {exercise.weight}
           </Typography>
           <Box sx={{ mt: 1 }}>
-            <Button variant='outlined' onClick={() => onExerciseEdit(index)}>
+            <Button
+              variant='outlined'
+              onClick={() => handleExerciseEdit(index)}
+            >
               Edit
             </Button>
             <Button
@@ -36,7 +44,7 @@ const WorkoutDetails = ({
         </Box>
       ))}
       <Box sx={{ mt: 2 }}>
-        <Button variant='outlined' color='error' onClick={onDelete}>
+        <Button variant='outlined' color='error' onClick={() => onDelete()}>
           Delete Workout
         </Button>
       </Box>

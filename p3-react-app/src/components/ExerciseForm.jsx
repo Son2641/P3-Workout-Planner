@@ -9,6 +9,7 @@ const ExerciseForm = ({
   onWorkoutSubmit,
   onSubmit,
   currentExercises,
+  onEdit,
 }) => {
   const [open, setOpen] = useState(false);
   const [exercises, setExercises] = useState([]);
@@ -20,21 +21,29 @@ const ExerciseForm = ({
 
   const handleExerciseSubmit = (exercise) => {
     if (editIndex !== null) {
-      // Editing an exercise
-      const updatedExercises = [...exercises];
-      updatedExercises[editIndex] = exercise;
-      setExercises(updatedExercises);
+      setExercises((prevExercises) => {
+        const updatedExercises = [...prevExercises];
+        updatedExercises[editIndex] = exercise;
+        return updatedExercises;
+      });
       setEditIndex(null);
     } else {
-      // Adding a new exercise
       setExercises((prevExercises) => [...prevExercises, exercise]);
     }
+
     onSubmit(exercise);
   };
 
   const handleExerciseEdit = (index) => {
     setEditIndex(index);
     setOpen(true);
+  };
+
+  const handleEditSave = (index, editedExercise) => {
+    const updatedExercises = [...exercises];
+    updatedExercises.splice(index, 1, editedExercise);
+    setExercises(updatedExercises);
+    onEdit(index, editedExercise);
   };
 
   const handleExerciseDelete = (index) => {
@@ -69,6 +78,9 @@ const ExerciseForm = ({
         onSubmit={handleExerciseSubmit}
         editMode={editIndex !== null}
         exerciseToEdit={editIndex !== null ? exercises[editIndex] : null}
+        exercises={currentExercises}
+        onEdit={handleEditSave}
+        editIndex={editIndex}
       />
 
       {exercises.length > 0 && (

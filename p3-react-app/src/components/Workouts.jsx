@@ -13,6 +13,7 @@ const Workouts = () => {
   const [exercises, setExercises] = useState([]);
   const [currentExercises, setCurrentExercises] = useState([]);
   const lastIdRef = useRef(0);
+  // const [openDialog, setOpenDialog] = useState(false);
 
   const handleTitleSubmit = (title) => {
     setTitle(title);
@@ -25,10 +26,21 @@ const Workouts = () => {
     lastIdRef.current += 1;
   };
 
+  const handleEditSave = (index, editedExercise) => {
+    const updatedExercises = [...currentExercises];
+    updatedExercises.splice(index, 1, editedExercise);
+    setCurrentExercises(updatedExercises);
+  };
+
+  const onEdit = (index, editedExercise) => {
+    handleEditSave(index, editedExercise);
+  };
+
   const handleWorkoutSubmit = () => {
     const workout = { title, currentExercises };
     setWorkouts([...workouts, workout]);
     setTitle('');
+    setExercises([]);
     setCurrentExercises([]);
     setOpen(false);
   };
@@ -37,6 +49,12 @@ const Workouts = () => {
     const newWorkouts = [...workouts];
     newWorkouts.splice(index, 1);
     setWorkouts(newWorkouts);
+
+    // Update the currentExercises state
+    const updatedCurrentExercises = currentExercises.filter(
+      (_, i) => i !== index
+    );
+    setCurrentExercises(updatedCurrentExercises);
   };
 
   const handleExerciseEdit = (workoutIndex, exerciseIndex, editedExercise) => {
@@ -45,6 +63,8 @@ const Workouts = () => {
     editedWorkout.currentExercises[exerciseIndex] = editedExercise;
     updatedWorkouts[workoutIndex] = editedWorkout;
     setWorkouts(updatedWorkouts);
+    // setOpenDialog(true);
+    console.log('1');
   };
 
   const handleExerciseDelete = (workoutIndex, exerciseIndex) => {
@@ -88,6 +108,7 @@ const Workouts = () => {
           currentExercises={currentExercises}
           onSubmit={handleExerciseSubmit}
           onWorkoutSubmit={handleWorkoutSubmit}
+          onEdit={onEdit}
         />
       )}
     </Box>
