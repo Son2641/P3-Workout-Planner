@@ -60,9 +60,16 @@ const ExerciseForm = ({
   };
 
   return (
-    <Box>
-      <Typography variant='h5' component='h2' gutterBottom>
-        {title}
+    <Box
+      sx={{
+        border: '2px solid #6F61FE',
+        width: '60%',
+        padding: '10px',
+        borderRadius: '10px',
+      }}
+    >
+      <Typography variant='h4' component='h1' gutterBottom>
+        Workout Name:{title}
       </Typography>
       <Box sx={{ mt: 2 }}>
         <Button variant='contained' onClick={() => setOpen(true)}>
@@ -87,24 +94,29 @@ const ExerciseForm = ({
         <Box>
           {exercises.map((exercise, index) => (
             <Box key={`exercise-${index}`} sx={{ mt: 2 }}>
-              <Typography variant='subtitle1' component='p'>
-                Exercise: {exercise.selectedExercise}, Reps: {exercise.reps},
-                Sets: {exercise.sets}, Weight: {exercise.weight}
+              <Typography
+                variant='subtitle1'
+                component='p'
+                textTransform='capitalize'
+              >
+                Exercise: {exercise.selectedExercise}, <br />
+                Reps: {exercise.reps}, Sets: {exercise.sets}, Weight:{' '}
+                {exercise.weight}
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <Button
                   variant='outlined'
                   onClick={() => handleExerciseEdit(index)}
-                  sx={{ mr: 1 }}
+                  sx={{ mr: 1, marginRight: '10px' }}
                 >
-                  Edit
+                  Edit Exercise
                 </Button>
                 <Button
                   variant='outlined'
                   color='error'
                   onClick={() => handleExerciseDelete(index)}
                 >
-                  Delete
+                  Delete Exercise
                 </Button>
               </Box>
             </Box>

@@ -76,9 +76,26 @@ const Workouts = () => {
   };
 
   return (
-    <Box>
-      <Typography variant='h4' component='h1' gutterBottom>
-        Workouts
+    <Box
+      sx={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTop: '4px solid #6F61FE',
+        width: '50%',
+        margin: 'auto',
+        marginTop: '50px',
+        boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.3)',
+        padding: '10px',
+        borderRadius: '20px',
+      }}
+    >
+      <Typography
+        variant='h4'
+        component='h1'
+        gutterBottom
+        sx={{ color: 'text.primary' }}
+      >
+        Start your fitness journey by creating your own workouts!
       </Typography>
       <CreateWorkoutButton onClick={() => setOpen(true)} />
       <WorkoutTitleDialog

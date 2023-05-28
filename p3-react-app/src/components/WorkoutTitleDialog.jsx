@@ -21,7 +21,7 @@ const WorkoutTitleDialog = ({ open, onClose, onSubmit }) => {
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Create Workout</DialogTitle>
+      <DialogTitle sx={{ fontWeight: 'bold' }}>Enter Workout Name:</DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
