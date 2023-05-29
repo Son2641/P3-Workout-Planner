@@ -5,6 +5,9 @@ import CreateWorkoutButton from './CreateWorkoutButton';
 import WorkoutTitleDialog from './WorkoutTitleDialog';
 import ExerciseForm from './ExerciseForm';
 import WorkoutDetails from './WorkoutDetails';
+import CompletedWorkout from './CompletedWorkout';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
@@ -13,7 +16,10 @@ const Workouts = () => {
   const [exercises, setExercises] = useState([]);
   const [currentExercises, setCurrentExercises] = useState([]);
   const lastIdRef = useRef(0);
+  const [completedWorkout, setCompletedWorkout] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
   // const [openDialog, setOpenDialog] = useState(false);
+  // const [editIndex, setEditIndex] = useState(null);
 
   const handleTitleSubmit = (title) => {
     setTitle(title);
@@ -37,20 +43,20 @@ const Workouts = () => {
   };
 
   const handleWorkoutSubmit = () => {
-    const workout = { title, currentExercises };
+    const workout = { title, currentExercises, isCompleted };
     setWorkouts([...workouts, workout]);
     setTitle('');
     setExercises([]);
     setCurrentExercises([]);
     setOpen(false);
+    setIsCompleted(false);
+    console.log(workouts);
   };
 
   const handleWorkoutDelete = (index) => {
     const newWorkouts = [...workouts];
     newWorkouts.splice(index, 1);
     setWorkouts(newWorkouts);
-
-    // Update the currentExercises state
     const updatedCurrentExercises = currentExercises.filter(
       (_, i) => i !== index
     );
@@ -63,8 +69,7 @@ const Workouts = () => {
     editedWorkout.currentExercises[exerciseIndex] = editedExercise;
     updatedWorkouts[workoutIndex] = editedWorkout;
     setWorkouts(updatedWorkouts);
-    // setOpenDialog(true);
-    console.log('1');
+    console.log(1);
   };
 
   const handleExerciseDelete = (workoutIndex, exerciseIndex) => {
@@ -75,56 +80,138 @@ const Workouts = () => {
     setWorkouts(updatedWorkouts);
   };
 
+  const handleCompletedWorkout = (event, workoutIndex) => {
+    const updatedWorkouts = [...workouts];
+    const editedWorkout = { ...updatedWorkouts[workoutIndex] };
+    editedWorkout.isCompleted = event.target.checked;
+    updatedWorkouts[workoutIndex] = editedWorkout;
+    setWorkouts(updatedWorkouts);
+  };
+
   return (
-    <Box
-      sx={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderTop: '4px solid #6F61FE',
-        width: '50%',
-        margin: 'auto',
-        marginTop: '50px',
-        boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.3)',
-        padding: '10px',
-        borderRadius: '20px',
-        paddingLeft: '15px',
-      }}
-    >
-      <Typography variant='h4' component='h1' gutterBottom color='text.primary'>
-        Start your fitness journey by creating your own workouts!
-      </Typography>
-      <CreateWorkoutButton onClick={() => setOpen(true)} />
-      <WorkoutTitleDialog
-        open={open}
-        onClose={() => setOpen(false)}
-        onSubmit={handleTitleSubmit}
-      />
-      {workouts.map((workout, workoutIndex) => (
-        <Box key={`workout-${workoutIndex}`} sx={{ mb: 4 }}>
-          <WorkoutDetails
-            key={`workout-details-${workoutIndex}`}
-            title={workout.title}
-            exercises={workout.currentExercises}
-            onDelete={() => handleWorkoutDelete(workoutIndex)}
-            onExerciseEdit={(exerciseIndex, editedExercise) =>
-              handleExerciseEdit(workoutIndex, exerciseIndex, editedExercise)
-            }
-            onExerciseDelete={(exerciseIndex) =>
-              handleExerciseDelete(workoutIndex, exerciseIndex)
-            }
+    <>
+      <Box
+        sx={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderTop: '4px solid #6F61FE',
+          width: '83%',
+          margin: 'auto',
+          marginTop: '50px',
+          boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.3)',
+          padding: '10px',
+          borderRadius: '20px',
+          paddingLeft: '15px',
+        }}
+      >
+        <Typography
+          variant='h4'
+          component='h1'
+          gutterBottom
+          color='text.primary'
+          textAlign='center'
+        >
+          Start your fitness journey by creating your own workouts!
+        </Typography>
+        <CreateWorkoutButton onClick={() => setOpen(true)} />
+        <Box
+          sx={{
+            display: 'flex',
+            // border: '1px solid black',
+            gap: '20px',
+            // height: '70%',
+          }}
+        >
+          <WorkoutTitleDialog
+            open={open}
+            onClose={() => setOpen(false)}
+            onSubmit={handleTitleSubmit}
           />
+          {workouts.map((workout, workoutIndex) => (
+            <Box key={`workout-${workoutIndex}`} sx={{ mb: 4 }}>
+              <WorkoutDetails
+                key={`workout-details-${workoutIndex}`}
+                title={workout.title}
+                exercises={workout.currentExercises}
+                onDelete={() => handleWorkoutDelete(workoutIndex)}
+                onExerciseEdit={(exerciseIndex, editedExercise) =>
+                  handleExerciseEdit(
+                    workoutIndex,
+                    exerciseIndex,
+                    editedExercise
+                  )
+                }
+                onExerciseDelete={(exerciseIndex) =>
+                  handleExerciseDelete(workoutIndex, exerciseIndex)
+                }
+              />
+              <FormControlLabel
+                label='Complete Workout'
+                control={
+                  <Checkbox
+                    checked={workout.isCompleted}
+                    onChange={(event) =>
+                      handleCompletedWorkout(event, workoutIndex)
+                    }
+                    color='primary'
+                  />
+                }
+              />
+            </Box>
+          ))}
+          {title && (
+            <ExerciseForm
+              title={title}
+              currentExercises={currentExercises}
+              onSubmit={handleExerciseSubmit}
+              onWorkoutSubmit={handleWorkoutSubmit}
+              onEdit={onEdit}
+            />
+          )}
         </Box>
-      ))}
-      {title && (
-        <ExerciseForm
-          title={title}
-          currentExercises={currentExercises}
-          onSubmit={handleExerciseSubmit}
-          onWorkoutSubmit={handleWorkoutSubmit}
-          onEdit={onEdit}
-        />
-      )}
-    </Box>
+      </Box>
+      <Box
+        sx={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderTop: '4px solid #6F61FE',
+          width: '83%',
+          margin: 'auto',
+          marginTop: '50px',
+          boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.3)',
+          padding: '10px',
+          borderRadius: '20px',
+          paddingLeft: '15px',
+        }}
+      >
+        <Typography
+          variant='h4'
+          component='h1'
+          gutterBottom
+          color='text.primary'
+          textAlign='center'
+        >
+          View your completed Workouts:
+        </Typography>
+        <Box sx={{ display: 'flex', gap: '20px' }}>
+          {workouts.map((workout, workoutIndex) => {
+            if (workout.isCompleted) {
+              return (
+                <Box key={`workout-${workoutIndex}`} sx={{ mb: 4 }}>
+                  <CompletedWorkout
+                    key={`completed-workout-${workoutIndex}`}
+                    title={workout.title}
+                    exercises={workout.currentExercises}
+                  />
+                </Box>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </Box>
+      </Box>
+    </>
   );
 };
 

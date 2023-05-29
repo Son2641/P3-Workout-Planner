@@ -10,6 +10,7 @@ const ExerciseForm = ({
   onSubmit,
   currentExercises,
   onEdit,
+  // openDialog,
 }) => {
   const [open, setOpen] = useState(false);
   const [exercises, setExercises] = useState([]);
@@ -62,14 +63,15 @@ const ExerciseForm = ({
   return (
     <Box
       sx={{
-        border: '2px solid #6F61FE',
-        width: '60%',
+        borderTop: '3px solid #6F61FE',
+        width: '20%',
         padding: '10px',
+        height: '10%',
         borderRadius: '10px',
       }}
     >
       <Typography variant='h5' component='h2' gutterBottom color='text.primary'>
-        Workout Name: {title}
+        {title}
       </Typography>
       <Box sx={{ mt: 2 }}>
         <Button variant='contained' onClick={() => setOpen(true)}>

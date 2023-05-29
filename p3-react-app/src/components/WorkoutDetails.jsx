@@ -7,54 +7,43 @@ const WorkoutDetails = ({
   title,
   exercises,
   onDelete,
-  onExerciseEdit,
-  onExerciseDelete,
+  // onExerciseEdit,
+  // onExerciseDelete,
 }) => {
-  const handleExerciseEdit = (index) => {
-    const exerciseToEdit = exercises[index];
-    onExerciseEdit(index, exerciseToEdit);
-  };
+  // const handleExerciseEdit = (index) => {
+  //   const exerciseToEdit = exercises[index];
+  //   onExerciseEdit(index, exerciseToEdit);
+  // };
 
   return (
     <Box
       sx={{
-        border: '2px solid #6F61FE',
-        width: '60%',
+        borderTop: '3px solid #6F61FE',
+        // width: '20%',
+        // height: '70%',
         padding: '10px',
         borderRadius: '10px',
       }}
     >
-      <Typography variant='h5' component='h2' gutterBottom>
-        Workout Name: {title}
+      <Typography variant='h5' component='h2' gutterBottom color='text.primary'>
+        {title}
       </Typography>
       {exercises.map((exercise, index) => (
-        <Box key={`exercise-${index}`} sx={{ mt: 2 }}>
+        <Box key={`exercise-${index}`} sx={{ mt: 1 }}>
           <Typography
             variant='subtitle1'
             component='p'
-            padding='20px'
+            padding='10px'
             textTransform='capitalize'
+            color='text.primary'
           >
-            Exercise: {exercise.selectedExercise || ''}, <br />
+            <Typography fontWeight='bold' color='text.primary'>
+              {exercise.selectedExercise || ''}
+            </Typography>
             Reps: {exercise.reps}, Sets: {exercise.sets}, Weight:{' '}
             {exercise.weight}
           </Typography>
-          <Box sx={{ mt: 1 }}>
-            <Button
-              variant='outlined'
-              onClick={() => handleExerciseEdit(index)}
-              sx={{ marginRight: '10px' }}
-            >
-              Edit Exercise
-            </Button>
-            <Button
-              variant='outlined'
-              color='error'
-              onClick={() => onExerciseDelete(index)}
-            >
-              Delete Exercise
-            </Button>
-          </Box>
+          <Box sx={{ mt: 1 }}></Box>
         </Box>
       ))}
       <Box sx={{ mt: 2 }}>

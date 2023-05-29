@@ -15,6 +15,7 @@ const ExerciseFormDialog = ({
   exerciseToEdit,
   onEdit,
   editIndex,
+  // openDialog,
 }) => {
   const [reps, setReps] = useState('');
   const [sets, setSets] = useState('');
@@ -89,7 +90,7 @@ const ExerciseFormDialog = ({
         />
         <TextField
           margin='dense'
-          label='Weight'
+          label='Weight in kg'
           type='number'
           fullWidth
           value={weight}
