@@ -51,11 +51,18 @@ const ExerciseForm = ({
     const updatedExercises = [...exercises];
     updatedExercises.splice(index, 1);
     setExercises(updatedExercises);
+
+    const updatedCurrentExercises = [...currentExercises];
+    updatedCurrentExercises.splice(index, 1);
+    setCurrentExercises(updatedCurrentExercises);
   };
 
   const handleWorkoutSubmit = () => {
     if (exercises.length > 0) {
-      onWorkoutSubmit({ title, exercises });
+      onWorkoutSubmit({
+        title,
+        exercises: [...currentExercises, ...exercises],
+      });
       setExercises([]);
     }
   };

@@ -165,7 +165,7 @@ const Workouts = () => {
               {title && (
                 <ExerciseForm
                   title={title}
-                  currentExercises={currentExercises}
+                  currentExercises={exercises}
                   onSubmit={handleExerciseSubmit}
                   onWorkoutSubmit={handleWorkoutSubmit}
                   onEdit={onEdit}
