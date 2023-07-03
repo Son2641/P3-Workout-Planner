@@ -50,35 +50,6 @@ export const getUserPosts = async (req, res) => {
 };
 
 // Update
-// export const editPost = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const { userId } = req.body;
-//     // Find the post by its ID
-//     const post = await Post.findById(id);
-
-//     if (!post) {
-//       return res.status(404).json({ message: 'Post not found' });
-//     }
-
-//     // Check if the current user is the author of the post
-//     if (post.userId !== userId) {
-//       return res.status(403).json({ error: 'Unauthorized' });
-//     }
-
-//     // Edit post description
-//     const updatedPost = await Post.findByIdAndUpdate(
-//       id,
-//       { description },
-//       { new: true }
-//     );
-
-//     res.status(200).json(updatedPost);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };
-
 export const likePost = async (req, res) => {
   try {
     const { id } = req.params;
