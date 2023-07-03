@@ -1,56 +1,15 @@
-# Getting started
+# Son Fitness
 
-This project was created with `create-uplift-project`
+## Introduction
 
-## Requirements
+The Son Fitness app is a fitness app that lets the user search for their favorite exercises. They can either search it manually or browse through the pages in the Exercises page. This app can also create workouts from the list of exercises available.
 
-- Node JS
+## Features
 
-## Installation
+- **Browse Exercises:** Users can browse or search for specific exercise or they can search it by bodypart category. Each exercise has a GIF that shows the form on how an exercise is done.
+- **View Exercise Details:** Users can click on a specific exercise to know more about how it targets specific muscles and also they can see the GIF of the exercise clearly.
+- **Create Workout:** Son Fitness app also let's the users create their own workout, all exercises that can be searched or seen from the Exercise page can be added to a workout. Users can specify their desired reps, sets and weight.
 
-Install the dependencies by running:
+## Notes
 
-```bash
-npm install
-```
-
-> You can replace the default `npm` to your favorite package manager like [`yarn`](https://yarnpkg.com) or [`pnpm`](https://pnpm.io)
-
-## Development
-
-After the [installation](#installation), you can run
-
-```bash
-npm run dev
-```
-
-This will run the app in the development mode.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-## Build
-
-This will build the app for production in `dist` folder.\
-It correctly bundles React in product mode, optimizes the build for the best performance.
-
-```bash
-npm run build
-```
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-## lint
-
-This will check any errors or warnings in your codes, and will automatically fix by running:
-
-```bash
-npm run lint:fix
-```
-
-For more information, check [ESLint documentation](https://eslint.org/)
-
-## Learn More
-
-You can learn more in the [Vite documentation](https://vitejs.dev/guide/)
+As this app is designed to be frontend-only, without a database, any workouts made or edited will only be temporary. Once the page is reloaded, the app will revert to its original state. This is also applicable to the registration/login form in the app, since user details can't be saved with frontend-only. Lastly, the list of exercises came from an API called ExerciseDB from RapidAPI, this API has limited calls only since this is the free version being used.
