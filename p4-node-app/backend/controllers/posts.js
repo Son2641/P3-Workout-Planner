@@ -19,8 +19,9 @@ export const createPost = async (req, res) => {
     });
     await newPost.save();
 
-    const post = await Post.find();
-
+    const post = await Post.find({ deleted: { $ne: true } }).sort({
+      createdAt: -1,
+    });
     res.status(201).json(post);
   } catch (err) {
     res.status(409).json({ message: err.message });
@@ -30,19 +31,21 @@ export const createPost = async (req, res) => {
 // Read
 export const getFeedPosts = async (req, res) => {
   try {
-    const post = await Post.find().sort({ createdAt: -1 });
-
+    const post = await Post.find({ deleted: { $ne: true } }).sort({
+      createdAt: -1,
+    });
     res.status(200).json(post);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    res.status(404).json({ error: err.message });
   }
 };
 
 export const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
-    const post = await Post.find({ userId }).sort({ createdAt: -1 });
-
+    const post = await Post.find({ userId, deleted: { $ne: true } }).sort({
+      createdAt: -1,
+    });
     res.status(200).json(post);
   } catch (err) {
     res.status(404).json({ message: err.message });
@@ -101,7 +104,6 @@ export const deleteComment = async (req, res) => {
     const { postId } = req.params;
     const { comment } = req.body;
     const post = await Post.findById(postId);
-    // console.log(post);
     const updatedPost = post.comments.filter((item, i) => {
       return item.comment !== comment;
     });
@@ -121,20 +123,18 @@ export const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
     const { userId } = req.body;
-    // Find the post by its ID
     const post = await Post.findById(id);
 
     if (!post) {
       return res.status(404).json({ message: 'Post not found' });
     }
 
-    // Check if the current user is the author of the post
     if (post.userId !== userId) {
       return res.status(403).json({ error: 'Unauthorized' });
     }
-
-    // Delete the post
-    await post.deleteOne();
+    post.deleted = true;
+    post.deletedAt = new Date();
+    await post.save();
 
     res.status(204).json({ message: 'Post deleted successfully' });
   } catch (err) {
