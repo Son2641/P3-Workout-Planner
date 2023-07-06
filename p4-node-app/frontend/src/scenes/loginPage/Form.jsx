@@ -6,6 +6,7 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
+  IconButton,
 } from '@mui/material';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Formik } from 'formik';
@@ -15,6 +16,8 @@ import { useDispatch } from 'react-redux';
 import { setLogin } from '../../state/index.js';
 import Dropzone from 'react-dropzone';
 import FlexBetween from '../../components/FlexBetween';
+import InputAdornment from '@mui/material/InputAdornment';
+import { VisibilityOff, Visibility } from '@mui/icons-material';
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required('Required'),
@@ -55,6 +58,7 @@ const initialValuesLogin = {
 
 const Form = () => {
   const [pageType, setPageType] = useState('login');
+  const [showPassword, setShowPassword] = useState(false);
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -106,6 +110,10 @@ const Form = () => {
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await login(values, onSubmitProps);
     if (isRegister) await register(values, onSubmitProps);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -227,7 +235,7 @@ const Form = () => {
             />
             <TextField
               label='Password'
-              type='password'
+              type={showPassword ? 'text' : 'password'}
               onBlur={handleBlur}
               onChange={handleChange}
               value={values.password}
@@ -235,6 +243,18 @@ const Form = () => {
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}
               sx={{ gridColumn: 'span 4' }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      onClick={togglePasswordVisibility}
+                      onMouseDown={(e) => e.preventDefault()}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Box>
 
