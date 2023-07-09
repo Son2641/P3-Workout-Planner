@@ -1,33 +1,6 @@
 import User from '../models/User.js';
 
 // Read
-export const searchUsers = async (req, res) => {
-  try {
-    // Retrieve the search query from the request parameters
-    const { query } = req.params;
-
-    // Search for users in the database based on the query
-    const users = await User.find({
-      $or: [
-        { firstName: { $regex: query, $options: 'i' } }, // Case-insensitive search by first name
-        { lastName: { $regex: query, $options: 'i' } }, // Case-insensitive search by last name
-      ],
-    });
-
-    // Extract full names from the user objects
-    const usersWithFullName = users.map((user) => ({
-      _id: user._id,
-      fullName: `${user.firstName} ${user.lastName}`,
-    }));
-
-    // Send the response with the matching users' full names
-    res.status(200).json(usersWithFullName);
-  } catch (err) {
-    // Handle errors
-    res.status(500).json({ message: err.message });
-  }
-};
-
 export const getUser = async (req, res) => {
   try {
     const { id } = req.params;
